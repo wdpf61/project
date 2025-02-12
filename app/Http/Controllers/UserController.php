@@ -13,7 +13,7 @@ class UserController extends Controller
         //$users=  DB::select("select * from core_users");
         $users= DB::table('users')->get();
         // $users=[];
-        return view('pages.users.index', compact('users'));
+        return view('pages.backend.users.index', compact('users'))->with('success', 'user data has been loaded');
     }
 
  
