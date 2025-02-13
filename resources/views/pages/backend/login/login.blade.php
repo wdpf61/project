@@ -59,7 +59,7 @@
           </div>
           <div class="col-lg-6 form-contentbox">
             <div class="form-container">
-              <form class="app-form" method="post" action="{{route('login.store')}}">
+              <form class="app-form" method="post" action="">
                 @csrf
                 <div class="row">
                   <div class="col-12">
