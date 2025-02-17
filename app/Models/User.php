@@ -53,4 +53,12 @@ class User extends Authenticatable
      function isCustomer(){
         return $this->role_id == 3;
      }
+
+     function isManager(){
+       return  $this->role_id == 4;
+     }
+
+     function role(){
+         return $this->belongsTo(Role::class);
+     }
 }

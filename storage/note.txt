@@ -1,0 +1,34 @@
+ <meta name="csrf-token" content="{{ csrf_token() }}">
+ <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+
+
+$.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+    });
+
+
+     $.ajax({
+                type:'POST',
+                url: "{{ route('products.store') }}",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: (response) => {
+                      $('#saveBtn').html('Submit');
+                      $('#productForm').trigger("reset");
+                      $('#ajaxModel').modal('hide');
+                      table.draw();
+                },
+                error: function(response){
+                    $('#saveBtn').html('Submit');
+                    $('#productForm').find(".print-error-msg").find("ul").html('');
+                    $('#productForm').find(".print-error-msg").css('display','block');
+                    $.each( response.responseJSON.errors, function( key, value ) {
+                        $('#productForm').find(".print-error-msg").find("ul").append('<li>'+value+'</li>');
+                    });
+                }
+           });
+      

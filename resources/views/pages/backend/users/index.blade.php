@@ -47,9 +47,12 @@
                                 <td>+1 (025) {{$user->mobile}}</td>
                                 <td>
                                     <div class="btn btn-group">
+                                         @if (auth()->user()->isAdmin())
                                          <a class="btn btn-sm btn-primary" href="{{url("user/show/$user->id")}}">Show</a>
                                          <a class="btn btn-sm btn-info" href="{{url("user/edit/$user->id")}}">Edit</a>
                                          <a class="btn btn-sm btn-danger" href="{{url("user/delete/$user->id")}}" > <i class="fa-solid fa-archive fa-fw"></i> </a>
+                                         @endif
+                                         
                                     </div>
                                 </td>
                             </tr>

@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthLogin\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,13 @@ Route::get('/check', function () {
     return view('404');
 });
 
+Route::get('/role', [RoleController::class, 'index']);
+
+
+Route::get('/manager', function () {
+    echo "this is manager page";
+})->middleware('manager');
+
 
 
 Route::get('/dashboard', function () {
@@ -41,9 +49,9 @@ Route::middleware('auth')->group(function () {
 
 
 
-// Route::get('user',[UserController::class,'index']);
-// Route::get('user/create',[UserController::class,'create']);
-// Route::post('user/store',[UserController::class,'store']);
+Route::get('user',[UserController::class,'index']);
+Route::get('user/create',[UserController::class,'create']);
+Route::post('user/store',[UserController::class,'store']);
 
 
   Route::get("/ourlogin", [AuthController::class, "login"])->name('login');
