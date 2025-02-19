@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthLogin\AuthController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -25,9 +27,20 @@ Route::get('user/create',[UserController::class,'create']);
 Route::post('user/store',[UserController::class,'store']);
 
 
- Route::get("/", [AuthController::class, "login"])->name('login');
+//  Route::get("/", [AuthController::class, "login"])->name('login');
+
+
  Route::post("/login", [AuthController::class, "login_store"])->name('login.store');
  Route::get("/register", [AuthController::class, "register"])->name('register');
+
+
+    Route::resource('products', ProductController::class);
+    Route::resource('customers', CustomerController::class);
+    Route::post('find_customer', [OrderController::class, 'find_customer']);
+    Route::post('find_product', [OrderController::class, 'find_product']);
+    Route::resource('orders', OrderController::class);
+
+
 
 
 
