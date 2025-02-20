@@ -18,19 +18,19 @@
 <table class="table table-hover text-nowrap">
 	<thead>
 		<tr>
-			<th>Id</th>
+			{{-- <th>Id</th> --}}
 			<th>Customer Id</th>
 			<th>Order Date</th>
 			<th>Delivery Date</th>
 			<th>Shipping Address</th>
 			<th>Order Total</th>
 			<th>Paid Amount</th>
-			<th>Remark</th>
+			{{-- <th>Remark</th>
 			<th>Status Id</th>
 			<th>Discount</th>
 			<th>Vat</th>
 			<th>Created At</th>
-			<th>Updated At</th>
+			<th>Updated At</th> --}}
 
 			<th>Action</th>
 		</tr>
@@ -38,19 +38,19 @@
 	<tbody>
 	@foreach($orders as $order)
 		<tr>
-			<td>{{$order->id}}</td>
+			{{-- <td>{{$order->id}}</td> --}}
 			<td>{{$order->customer_id}}</td>
 			<td>{{$order->order_date}}</td>
 			<td>{{$order->delivery_date}}</td>
 			<td>{{$order->shipping_address}}</td>
 			<td>{{$order->order_total}}</td>
 			<td>{{$order->paid_amount}}</td>
-			<td>{{$order->remark}}</td>
+			{{-- <td>{{$order->remark}}</td>
 			<td>{{$order->status_id}}</td>
 			<td>{{$order->discount}}</td>
 			<td>{{$order->vat}}</td>
 			<td>{{$order->created_at}}</td>
-			<td>{{$order->updated_at}}</td>
+			<td>{{$order->updated_at}}</td> --}}
 
 			<td>
 			<form action = "{{route('orders.destroy',$order->id)}}" method = "post">

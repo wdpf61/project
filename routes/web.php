@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,10 @@ Route::get('/dashboard', function () {
 });
 
 Route::get('user',[UserController::class,'index']);
+Route::get('front',function(){
+    $products=Product::get();
+    return view('pages.frontend.product.index', compact('products'));
+});
 Route::get('user/create',[UserController::class,'create']);
 Route::post('user/store',[UserController::class,'store']);
 
@@ -33,7 +38,9 @@ Route::post('user/store',[UserController::class,'store']);
  Route::post("/login", [AuthController::class, "login_store"])->name('login.store');
  Route::get("/register", [AuthController::class, "register"])->name('register');
 
+    Route::prefix()->group(function(){
 
+    });
     Route::resource('products', ProductController::class);
     Route::resource('customers', CustomerController::class);
     Route::post('find_customer', [OrderController::class, 'find_customer']);
