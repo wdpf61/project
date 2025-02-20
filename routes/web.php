@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthLogin\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\restaurant\RestaurantController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -47,7 +48,14 @@ Route::post('user/store',[UserController::class,'store']);
     Route::post('find_product', [OrderController::class, 'find_product']);
     Route::resource('orders', OrderController::class);
 
+Route::prefix('res')->group(function(){
 
+    Route::view('/', 'restaurant.index');
+    Route::view('cart', 'restaurant.cart');
+    Route::get('shop', [RestaurantController::class,'index']);
+
+
+});
 
 
 
