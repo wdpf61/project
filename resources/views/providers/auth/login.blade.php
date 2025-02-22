@@ -115,7 +115,7 @@
                                 @endforeach
                             @endif
 
-                            <form class="app-form" method="POST" action="{{ route('login') }}">
+                            <form class="app-form" method="POST" action="{{ route('provider.login') }}">
 
                                 @csrf
                                 <div class="row">

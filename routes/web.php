@@ -31,7 +31,14 @@ Route::get('/check', function () {
 Route::get('/dashboard', function () {
     // return view('dashboard');
     return view('welcome');
-})->middleware(['auth', 'verified', 'admin'])->name('dashboard');
+})->middleware(['auth:web', 'verified', 'admin'])->name('dashboard');
+
+Route::get('/providerdashboard', function () {
+    // return view('dashboard');
+    // return view('welcome');
+
+    echo "this is providerdashboard";
+})->middleware(['auth:serviceprovider'])->name('providerdashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

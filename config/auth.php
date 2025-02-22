@@ -40,9 +40,9 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'admin' => [
+        'serviceprovider' => [
             'driver' => 'session',
-            'provider' => 'admins',
+            'provider' => 'serviceproviders',
         ],
     ],
 
@@ -68,10 +68,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        // 'providers' => [
-        //     'driver' => 'eloquent',
-        //     'model' => App\Models\Providers::class,
-        // ],
+        'serviceproviders' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Provider::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
