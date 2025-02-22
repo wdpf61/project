@@ -32,26 +32,30 @@ class OrderController extends Controller{
 	     ]);
 	}
 	public function store(Request $request){
+
+		// print_r($request->all());
 		//Order::create($request->all());
-		$order = new Order;
-		$order->customer_id=$request->customer_id;
-		$order->order_date=$request->order_date;
-		$order->delivery_date=$request->delivery_date;
-		$order->shipping_address=$request->shipping_address;
-		$order->order_total=$request->order_total;
-		$order->paid_amount=$request->paid_amount;
-		$order->remark=$request->remark;
-		$order->status_id=$request->status_id;
-		$order->discount=$request->discount;
-		$order->vat=$request->vat;
-date_default_timezone_set("Asia/Dhaka");
-		$order->created_at=date('Y-m-d H:i:s');
-date_default_timezone_set("Asia/Dhaka");
-		$order->updated_at=date('Y-m-d H:i:s');
+		// $order = new Order;
+		// $order->customer_id=$request->customer_id;
+		// $order->order_date=$request->order_date;
+		// $order->delivery_date=$request->delivery_date;
+		// $order->shipping_address=$request->shipping_address;
+		// $order->order_total=$request->order_total;
+		// $order->paid_amount=$request->paid_amount;
+		// $order->remark=$request->remark;
+		// $order->status_id=$request->status_id;
+		// $order->discount=$request->discount;
+		// $order->vat=$request->vat;
+        // date_default_timezone_set("Asia/Dhaka");
+		// $order->created_at=date('Y-m-d H:i:s');
+        // date_default_timezone_set("Asia/Dhaka");
+		// $order->updated_at=date('Y-m-d H:i:s');
 
-		$order->save();
+		// $order->save();
+		// return back()->with('success', 'Created Successfully.');
 
-		return back()->with('success', 'Created Successfully.');
+
+		
 	}
 	public function show($id){
 		$order = Order::find($id);
