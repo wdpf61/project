@@ -49,12 +49,9 @@ Route::post('user/store',[UserController::class,'store']);
     Route::resource('orders', OrderController::class);
 
 Route::prefix('res')->group(function(){
-
     Route::view('/', 'restaurant.index');
     Route::view('cart', 'restaurant.cart');
     Route::get('shop', [RestaurantController::class,'index']);
-
-
 });
 
 
