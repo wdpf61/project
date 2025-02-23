@@ -57,9 +57,13 @@ Route::middleware('auth')->group(function () {
 //  Route::post("/login", [AuthController::class, "login_store"])->name('login.store');
 //  Route::get("/register", [AuthController::class, "register"])->name('register');
 
+Route::get('/customer/profile', function(){
+    echo "customer profile";
+})->middleware(['auth:customer']);
 
 
 require __DIR__.'/frontend.php';
 
 require __DIR__.'/auth.php';
+require __DIR__.'/customer_auth.php';
 require __DIR__.'/auth_providers.php';
