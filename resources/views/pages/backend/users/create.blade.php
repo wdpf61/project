@@ -1,4 +1,4 @@
-@extends('layout.backend.main')
+@extends('layout.erp.main')
 
 @section('page_content')
 

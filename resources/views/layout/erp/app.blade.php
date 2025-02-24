@@ -77,20 +77,20 @@
 
         <!-- Menu Navigation starts -->
 
-        @include('layout.backend.sidebar')
+        @include('layout.erp.sidebar')
         <!-- Menu Navigation ends -->
 
         <div class="app-content">
             <div class="">
 
                 <!-- Header Section starts -->
-                @include('layout.backend.header')
+                @include('layout.erp.header')
                 <!-- Header Section ends -->
 
                 <!-- Body main section starts -->
                 <main>
                     <div class="container-fluid">
-                         @yield('page_content')
+                         @yield('page')
                     </div>
                 </main>
             </div>
@@ -106,7 +106,7 @@
         </div>
 
         <!-- Footer Section starts-->
-        @include('layout.backend.footer')
+        @include('layout.erp.footer')
         <!-- Footer Section ends-->
     </div>
 

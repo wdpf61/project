@@ -63,3 +63,4 @@ Route::post('user/store',[UserController::class,'store']);
 require __DIR__.'/frontend.php';
 
 require __DIR__.'/auth.php';
+require __DIR__.'/account.php';
