@@ -1,8 +1,7 @@
-@extends('layout.backend.main')
+@extends('layout.erp.app')
 
-@section('page_content')
+@section('page')
     
-
 <div class="row">
     <div class="col-lg-7 col-xxl-6">
         <div class="row">

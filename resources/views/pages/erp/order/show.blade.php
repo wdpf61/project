@@ -15,24 +15,111 @@
 @endsection
 @section('page')
 <a class='btn btn-success' href="{{route('orders.index')}}">Manage</a>
-<table class='table table-striped text-nowrap'>
-<tbody>
-		<tr><th>Id</th><td>{{$order->id}}</td></tr>
-		<tr><th>Customer Id</th><td>{{$order->customer_id}}</td></tr>
-		<tr><th>Order Date</th><td>{{$order->order_date}}</td></tr>
-		<tr><th>Delivery Date</th><td>{{$order->delivery_date}}</td></tr>
-		<tr><th>Shipping Address</th><td>{{$order->shipping_address}}</td></tr>
-		<tr><th>Order Total</th><td>{{$order->order_total}}</td></tr>
-		<tr><th>Paid Amount</th><td>{{$order->paid_amount}}</td></tr>
-		<tr><th>Remark</th><td>{{$order->remark}}</td></tr>
-		<tr><th>Status Id</th><td>{{$order->status_id}}</td></tr>
-		<tr><th>Discount</th><td>{{$order->discount}}</td></tr>
-		<tr><th>Vat</th><td>{{$order->vat}}</td></tr>
-		<tr><th>Created At</th><td>{{$order->created_at}}</td></tr>
-		<tr><th>Updated At</th><td>{{$order->updated_at}}</td></tr>
+<div class="page-wrapper">
+	<div class="content">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-10 mx-auto">
+					
+					<!-- Invoice -->
+					<div class="invoice-wrap">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="invoice-address">
+									<h6 class="mb-2">Invoice From:</h6>
+									<ul>
+										<li>Truelysell</li>
+										<li>367 Hillcrest Lane, Irvine, California, United States</li>
+										<li class="mb-0"><a href="https://truelysell.dreamstechnologies.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e7939592828b9e94828b8ba7829f868a978b82c984888a">[email&#160;protected]</a></li>
+									</ul>
+								</div>				
+							</div>		
+							<div class="col-md-6">
+								<div class="invoice-address d-flex justify-content-end">
+									<div>
+										<h6 class="mb-2">Invoice To:</h6>
+									<ul>
+										<li>{{$order->customer->name}}</li>
+										<li>1620 Jerry Dove Drive Myrtle Beach, SC 29577</li>
+										<li><a href="https://truelysell.dreamstechnologies.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="024e6b6e6e6b636c404f63616d6c42706a7b76632c616d6f">[email&#160;protected]</a></li>
+									</ul>
+									</div>
+								</div>									
+							</div>
+							<div class="row">
+								<div class="col-12 ">
+									<div class="table-resposnive">
+										<table class="table datatable">
+											<thead>
+												<tr>
+													<th>Services</th>
+													<th>Description</th>
+													<th>Price</th>
+													<th>Hours</th>
+													<th>Total</th>
+												</tr>
+											</thead>
+											<tbody>
 
-</tbody>
-</table>
+												@forelse ($order->orderdetails as $details)
+												<tr>
+													<td><p class="fs-14">{{ optional($details->product)->name}}</p></td>
+													<td>
+														<p class="fs-14 text-gray">Reliable computer repair,<br> fast and efficient.</p>
+													
+													</td>
+													<td><span class="fs-14 text-gray">$80	 </span></td>
+													<td><p class="fs-14 text-gray">1 Hour</p></td>
+													<td><span class="fs-14 text-gray">$80	 </span></td>
+												</tr>
+												@empty
+													
+												@endforelse
+											
+												
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="invoice-payment">
+									<h6 class="mb-4">Payment info:</h6>
+									<ul>
+										<li>Credit Card - 123***********789</li>
+										<li class="mb-0"><span>Amount:</span> $252.36</li>
+									</ul>
+								</div>	
+							</div>
+							<div class="col-md-6">
+								<div class="d-flex justify-content-end">
+									<div class="invoice-total">
+										<ul>
+											<li class="d-flex justify-content-between gap-5">Sub Total <span>$244.00</span></li>
+											<li class="d-flex justify-content-between gap-5">Tax(5%) <span>$8.36</span></li>
+											<li class="d-flex justify-content-between gap-5 mb-0">Total <span class="text-dark">$252.36</span></li>
+										</ul>
+									</div>	
+								</div>
+							</div>
+							
+							<div class="invoice-terms rounded">
+								<h6 class="fs-14 mb-3">Terms & Conditions:</h6>
+								<ul>
+									<li>All payments must be made according to the agreed schedule. Late payments may incur additional fees.</li>
+									<li class="mb-0">Cancellations must be made within 10 days of service. Refunds are subject to review and may not be granted if the service has been substantially performed.</li>
+								</ul>
+							</div>
+						</div>								
+					</div>
+
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 @endsection
 @section('script')
 

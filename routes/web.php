@@ -5,7 +5,10 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Mail\Test;
+use App\Mail\wdpfMail;
 use App\Models\Product;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +25,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/dashboard', function () {
     return view('welcome');
 });
+
+Route::get('/mailsend', function(){
+    Mail::to('abc@gmail.com')->send(new wdpfMail());
+});
+
+Route::get("testMail", function(){
+     Mail::to('hasan@email.com')->send(new Test());
+});
+
 
 Route::get('user',[UserController::class,'index']);
 Route::get('front',function(){
