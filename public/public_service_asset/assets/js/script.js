@@ -1414,9 +1414,13 @@ $(document).ready(function () {
 
 $(document).ready(function () {
 	/*---------------------------------------------------------*/
+	
+	
 	$(".wizard-fieldset #first-field .next_btn").on('click', function () {
 		$('#providerwizard .active').removeClass('active').addClass('active').next().addClass('');
 	});
+
+
 	$(".wizard-fieldset .next_btn").on('click', function () { // Function Runs On NEXT Button Click
 		$(this).closest('fieldset').next().fadeIn('slow');
 		$(this).closest('fieldset').css({
@@ -1434,6 +1438,8 @@ $(document).ready(function () {
 			$('#providerwizard .active').removeClass('active').addClass('activated').next().addClass('active');
 		}
 	});
+
+	
 	$(".wizard-fieldset .prev_btn").on('click', function () { // Function Runs On NEXT Button Click
 		$(this).closest('fieldset').prev().fadeIn('slow');
 		$(this).closest('fieldset').css({

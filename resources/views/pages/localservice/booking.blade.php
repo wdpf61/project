@@ -30,11 +30,11 @@
 												<div class="booking-wizard">
 													<h6 class="text-white fs-14 mb-3">Bookings</h6>
 													<ul class="wizard-progress" id="bokingwizard">
-														<li class="active pb-3">
+														{{-- <li class="active pb-3">
 															<span>1. Location</span>
-														</li>
-														<li class="pb-3">
-															<span>2. Staffs</span>															
+														</li> --}}
+														<li class="active pb-3">
+															<span>2. Providers</span>															
 														</li>
 														<li class="pb-3">
 															<span>3. Additional Services</span>															
@@ -71,7 +71,7 @@
 									<div class="col-lg-9">
 
 										<!-- Location -->
-										<fieldset class="booking-content"  id="first-field">
+										{{-- <fieldset class="booking-content"  id="first-field">
 											<div class="book-card">
 												<div class="d-flex align-items-center justify-content-between flex-wrap booking-title">
 													<div class="d-flex align-items-center mb-2">
@@ -226,11 +226,11 @@
 											<div class="booking-footer d-flex align-items-center justify-content-end">
 												<a href="javascript:void(0);" class="btn btn-sm btn-dark d-inline-flex align-items-center next_btn">Next<i class="ti ti-arrow-right ms-1"></i></a>
 											</div>
-										</fieldset>
+										</fieldset> --}}
 										<!-- /Location -->
 
 										<!-- Staffs -->
-										<fieldset class="booking-content">
+										<fieldset  id="first-field" class="booking-content">
 											<div class="book-card">
 												<div class="d-flex align-items-center justify-content-between flex-wrap booking-title">
 													<div class="d-flex align-items-center mb-2">
