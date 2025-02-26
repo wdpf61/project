@@ -25,6 +25,8 @@ class TransactionController extends Controller{
 		return view("pages.erp.transaction.create",["accounts"=>Account::all(),"users"=>User::all()]);
 	}
 	public function store(Request $request){
+
+		
 		//Transaction::create($request->all());
 		$transaction = new Transaction;
 		$transaction->voucher_ref=$request->voucher_ref;
@@ -36,9 +38,9 @@ class TransactionController extends Controller{
 		$transaction->debit=$request->debit;
 		$transaction->credit=$request->credit;
 		$transaction->user_id=$request->user_id;
-date_default_timezone_set("Asia/Dhaka");
+        date_default_timezone_set("Asia/Dhaka");
 		$transaction->created_at=date('Y-m-d H:i:s');
-date_default_timezone_set("Asia/Dhaka");
+          date_default_timezone_set("Asia/Dhaka");
 		$transaction->updated_at=date('Y-m-d H:i:s');
 
 		$transaction->save();
