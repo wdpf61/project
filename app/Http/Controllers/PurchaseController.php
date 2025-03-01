@@ -1,0 +1,104 @@
+<?php
+
+namespace App\Http\Controllers;
+use App\Http\Controllers\Controller;
+use App\Mail\OrderInvoiceMail;
+use App\Models\Order;
+use App\Models\Customer;
+use App\Models\Product;
+use App\Models\Status;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Mail;
+
+class PurchaseController extends Controller{
+	public function index(){
+		$orders = Order::paginate(10);
+		return view("pages.erp.purchase.index",["orders"=>$orders]);
+	}
+	public function create(){
+		return view("pages.erp.purchase.create",
+		[
+		 "customers"=>Customer::all(),
+		 "products"=> Product::all(),
+		 "status"=>Status::all()
+	
+	     ]);
+	}
+	public function store(Request $request){
+
+		// print_r($request->all());
+		//Order::create($request->all());
+		// $order = new Order;
+		// $order->customer_id=$request->customer_id;
+		// $order->order_date=$request->order_date;
+		// $order->delivery_date=$request->delivery_date;
+		// $order->shipping_address=$request->shipping_address;
+		// $order->order_total=$request->order_total;
+		// $order->paid_amount=$request->paid_amount;
+		// $order->remark=$request->remark;
+		// $order->status_id=$request->status_id;
+		// $order->discount=$request->discount;
+		// $order->vat=$request->vat;
+        // date_default_timezone_set("Asia/Dhaka");
+		// $order->created_at=date('Y-m-d H:i:s');
+        // date_default_timezone_set("Asia/Dhaka");
+		// $order->updated_at=date('Y-m-d H:i:s');
+
+		// $order->save();
+		// return back()->with('success', 'Created Successfully.');
+
+
+		
+	}
+	public function show($id){
+		$order = Order::with(['orderdetails', 'customer','orderdetails.product' ])->find($id);
+		//echo json_encode($order);
+
+
+         Mail::to($order->customer->email)->send(new OrderInvoiceMail($order));
+		 return view("pages.erp.purchase.show",["order"=>$order]);
+
+
+	}
+	public function edit(Order $order){
+		return view("pages.erp.purchase.edit",["order"=>$order,"customers"=>Customer::all(),"status"=>Status::all()]);
+	}
+	public function update(Request $request,Order $order){
+		//Order::update($request->all());
+		$order = Order::find($order->id);
+		$order->customer_id=$request->customer_id;
+		$order->order_date=$request->order_date;
+		$order->delivery_date=$request->delivery_date;
+		$order->shipping_address=$request->shipping_address;
+		$order->order_total=$request->order_total;
+		$order->paid_amount=$request->paid_amount;
+		$order->remark=$request->remark;
+		$order->status_id=$request->status_id;
+		$order->discount=$request->discount;
+		$order->vat=$request->vat;
+        date_default_timezone_set("Asia/Dhaka");
+		$order->created_at=date('Y-m-d H:i:s');
+        date_default_timezone_set("Asia/Dhaka");
+		$order->updated_at=date('Y-m-d H:i:s');
+
+		$order->save();
+
+		return redirect()->route("purchase.index")->with('success','Updated Successfully.');
+	}
+
+
+	public function find_supplier(Request $request){
+		$customer = Customer::find($request->id);
+		return response()->json(['customer'=> $customer]);
+	}
+	public function find_product(Request $request){
+		$product = Product::find($request->id);
+		return response()->json(['product'=> $product]);
+	}
+	
+}
+?>
