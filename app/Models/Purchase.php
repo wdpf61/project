@@ -19,6 +19,10 @@ class Purchase extends Model{
         return $this->belongsTo(Customer::class);
     }
 
+    function supplier(){
+        return $this->belongsTo(Supplier::class);
+    }
+
 
 
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\PurchaseReportController;
 use App\Http\Controllers\UserController;
 use App\Mail\Test;
 use App\Mail\wdpfMail;
@@ -61,7 +62,8 @@ Route::post('user/store',[UserController::class,'store']);
     Route::resource('orders', OrderController::class);
     Route::resource('purchase', PurchaseController::class);
 
-
+    Route::get('/purchase-report', [PurchaseReportController::class, 'index']);
+    Route::post('/purchase-report', [PurchaseReportController::class, 'show']);
 
 
 
