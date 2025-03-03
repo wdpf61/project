@@ -10,7 +10,11 @@ use App\Http\Controllers\UserController;
 use App\Mail\Test;
 use App\Mail\wdpfMail;
 use App\Models\Product;
+use App\Models\User;
+use App\Notifications\EmailNotification;
+use App\Notifications\OrderShipped;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,8 +29,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/dashboard', function () {
+    
+    $user= User::first();
+    Notification::send($user, new EmailNotification());
+
+    // $user->notify(new EmailNotification());
     return view('welcome');
 });
+
+
 
 Route::get('/mailsend', function(){
     Mail::to('abc@gmail.com')->send(new wdpfMail());

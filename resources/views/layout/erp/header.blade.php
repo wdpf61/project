@@ -596,7 +596,10 @@
                 </div>
                 <div class="offcanvas-body app-scroll p-0">
                   <div class="head-container">
-                    <div class="notification-message head-box">
+                    $unreadNotifications = ;
+
+                     @foreach (auth()->user()->unreadNotifications  as $notificaton )
+                     <div class="notification-message head-box">
                       <div class="message-images">
                         <span class="bg-secondary h-35 w-35 d-flex-center b-r-10 position-relative">
                           <img src="{{asset('assets')}}/images/ai_avtar/6.jpg" alt="" class="img-fluid b-r-10">
@@ -620,7 +623,11 @@
                         <i class="ph ph-trash f-s-18 text-danger close-btn"></i>
                       </div>
                     </div>
-                    <div class="notification-message head-box">
+                     @endforeach
+                  
+
+
+                    {{-- <div class="notification-message head-box">
                       <div class="message-images">
                         <span class="bg-light-dark h-35 w-35 d-flex-center b-r-10 position-relative">
                           <i class="ph-duotone  ph-truck f-s-18"></i>
@@ -696,7 +703,7 @@
                       <div class="align-self-start text-end">
                         <i class="ph ph-trash f-s-18 text-danger close-btn"></i>
                       </div>
-                    </div>
+                    </div> --}}
 
                     <div class="hidden-massage py-4 px-3">
                       <img src="{{asset('assets')}}/images/icons/bell.png" class="w-50 h-50 mb-3 mt-2" alt="">
