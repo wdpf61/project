@@ -8,7 +8,7 @@
  */
 ?>
 @extends('layout.erp.app')
-@section('title', 'Create Order')
+@section('title', 'Create Purchase')
 @section('style')
 
     <link rel="stylesheet" href="{{ asset('assets_invoice/css/style.css') }}">

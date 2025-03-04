@@ -2,13 +2,12 @@
 
 namespace App\Notifications;
 
-use App\Mail\wdpfMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class EmailNotification extends Notification
+class WdpfNotify extends Notification
 {
     use Queueable;
 
@@ -30,8 +29,8 @@ class EmailNotification extends Notification
      */
     public function via($notifiable)
     {
-        // return ['mail'];
-        return ['database']; 
+        // return ['mail', 'database'];
+        return ['database'];
     }
 
     /**
@@ -43,21 +42,18 @@ class EmailNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Please come in out weadding .')
-                    ->action('Notification Action', url('https://comforting-longma-cad481.netlify.app/'))
-                    ->line('Thank you ');
-
-                    return (new wdpfMail())->to($notifiable->email);
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
+
 
     public function toDatabase($notifiable)
     {
         return [
-            'order_id' => 1,
-            'message' => "Your order #0001 has been shipped!",
-            'url' => url("/orders/"),
-            'approved' => 0,
-
+            'Batch' => "Wdpf61",
+            'message' => "Your Project data is comming soon!",
+            'url' => url("/project/"),
         ];
     }
 

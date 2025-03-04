@@ -13,6 +13,8 @@ use App\Models\Product;
 use App\Models\User;
 use App\Notifications\EmailNotification;
 use App\Notifications\OrderShipped;
+use App\Notifications\WdpfNotify;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
@@ -30,12 +32,37 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', function () {
     
-    $user= User::first();
-    Notification::send($user, new EmailNotification());
+    //  $user= Auth::user();
+    //  if ($user) {
+    //     $user->notify(new WdpfNotify());
 
-    // $user->notify(new EmailNotification());
+    //     // Notification::send($user, new EmailNotification());
+    //     // echo "user found ";
+    // }
     return view('welcome');
 });
+
+Route::get('/notifications/{id}/read', function ($id) {
+    $notification = auth()->user()->notifications()->find($id);
+    if ($notification) {
+        $notification->markAsRead();
+    }
+    return back();
+})->name('notifications.markAsRead');
+
+
+Route::get('/notifications/{id}/delete', function ($id) {
+    $notification = auth()->user()->notifications()->find($id);
+    if ($notification) {
+        $notification->delete();
+    }
+    return back();
+});
+
+Route::get('/notifications/delete', function () {
+    auth()->user()->notifications()->delete();
+    return back();
+})->name('notifications.deleteAll');
 
 
 
@@ -79,3 +106,10 @@ Route::post('user/store',[UserController::class,'store']);
 
 
 require __DIR__.'/frontend.php';
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+

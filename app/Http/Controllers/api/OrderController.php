@@ -44,7 +44,9 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-
+  
+    try {
+        DB::beginTransaction();
         $order = new Order;
         $order->customer_id = $request->customer_id;
         $order->order_date = now();
@@ -80,7 +82,7 @@ class OrderController extends Controller
             date_default_timezone_set("Asia/Dhaka");
             $orderdetail->updated_at = date('Y-m-d H:i:s');
             $orderdetail->save();
-
+            $cogs= 0; 
             $remainingQty = $product['qty'];
             while ($remainingQty > 0) {
                 $lot = Lot::where('product_id', $product['item_id'])
@@ -96,6 +98,7 @@ class OrderController extends Controller
                 $deductQty = min($lot->quantity, $remainingQty);
                 $lot->decrement('quantity', $deductQty);
                 $remainingQty -= $deductQty;
+                $cogs += $lot->cost_price;
                 
                 $stock = new Stock();
                 $stock->product_id = $product['item_id'];
@@ -110,7 +113,27 @@ class OrderController extends Controller
                 $stock->save();
             }
         }
+
+        //   cash    d
+        //   sales   c
+        
+        //  cogs     d
+        //  inv      c 
+
+        // $cashTransaction= new Trans
+        
+
+
+
+
+          DB::commit();
         return response()->json(['success' => "success"]);
+
+         } catch (\Throwable $th) {
+
+            DB::rollBack();
+            return response()->json(['success' => $th]);
+         }
         
     }
 
@@ -135,6 +158,8 @@ class OrderController extends Controller
         $purchase->updated_at = date('Y-m-d H:i:s');
         $purchase->save();
         $lastInsertedId = $purchase->id;
+
+
         $productsdata = $request->products;
         // print_r( $productsdata);
 
@@ -168,9 +193,6 @@ class OrderController extends Controller
             $lot->save();
 
             $lastId = $lot->id;
-
-
-
 
             $stock = new Stock();
             $stock->product_id = $product['item_id'];
