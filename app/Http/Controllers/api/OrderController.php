@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\TransactionController;
 use App\Models\Lot;
 use App\Models\Order;
 use App\Models\OrderDetails;
@@ -69,7 +70,8 @@ class OrderController extends Controller
         $productsdata = $request->products;
 
         // print_r( $productsdata);
-
+        $cogs =0;
+        $sale_price =0;
         foreach ($productsdata as $key => $product) {
             $orderdetail = new OrderDetails;
             $orderdetail->order_id = $lastInsertedId;
@@ -85,6 +87,7 @@ class OrderController extends Controller
             $orderdetail->save();
             $cogs= 0; 
             $remainingQty = $product['qty'];
+            $sale_price= $product['price'];
             while ($remainingQty > 0) {
                 $lot = Lot::where('product_id', $product['item_id'])
                     ->where('quantity', '>', 0)
@@ -95,7 +98,7 @@ class OrderController extends Controller
                     throw new Exception("Not enough stock for Product ID: " . $product['item_id']);
                 }
 
-
+             
                 $deductQty = min($lot->quantity, $remainingQty);
                 $lot->decrement('quantity', $deductQty);
                 $remainingQty -= $deductQty;
@@ -130,10 +133,10 @@ class OrderController extends Controller
 		$cogs_transaction->voucher_ref=1;
 		$cogs_transaction->transaction_date=now();
 		$cogs_transaction->account_id= 34 ;
-		$cogs_transaction->amount=2000;
+		$cogs_transaction->amount= $cogs;
 		$cogs_transaction->description="COGS";
 		$cogs_transaction->transaction_against=56;
-		$cogs_transaction->debit=2000;
+		$cogs_transaction->debit=  $cogs;
 		$cogs_transaction->credit=0;
 		$cogs_transaction->user_id=1;
         date_default_timezone_set("Asia/Dhaka");
@@ -146,17 +149,39 @@ class OrderController extends Controller
 		$inv_transaction->voucher_ref=1;
 		$inv_transaction->transaction_date=now();
 		$inv_transaction->account_id=57;
-		$inv_transaction->amount=2000;
+		$inv_transaction->amount=$cogs;
 		$inv_transaction->description="inventory";
 		$inv_transaction->transaction_against=34 ;
 		$inv_transaction->debit=0;
-		$inv_transaction->credit=2000;
+		$inv_transaction->credit=$cogs;
 		$inv_transaction->user_id=1;
         date_default_timezone_set("Asia/Dhaka");
 		$inv_transaction->created_at=date('Y-m-d H:i:s');
           date_default_timezone_set("Asia/Dhaka");
 		$inv_transaction->updated_at=date('Y-m-d H:i:s');
 		$inv_transaction->save();
+
+      $cash = new Request([
+         'voucher_ref' => 1,
+         'account_id' => 1,
+         'description' => "cash account",
+         'amount' => $sale_price,
+         'transaction_against' => 28,
+         'debit' => $sale_price,
+         'credit' => 0,
+     ]);
+    TransactionController::transactionAcc(   $cash );
+      
+    $sales = new Request([
+         'voucher_ref' => 1,
+         'account_id' =>28,
+         'description' => "cash account",
+         'amount' => $sale_price,
+         'transaction_against' => 1,
+         'debit' =>0,
+         'credit' =>$sale_price,
+     ]);
+    TransactionController::transactionAcc($sales);
 
 
 
