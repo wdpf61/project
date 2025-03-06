@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\OrderController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +24,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('orders', OrderController::class);
 
 Route::post('purchase', [OrderController::class, 'Purchase_store']);
+
+
+Route::post('register',[AuthController::class,'register']);
+Route::post('login', [AuthController::class,'login']);
+Route::post('refresh', [AuthController::class,'refresh']);
+Route::post('logout', [AuthController::class,'logout']);
