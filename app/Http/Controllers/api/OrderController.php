@@ -9,6 +9,7 @@ use App\Models\OrderDetails;
 use App\Models\Purchase;
 use App\Models\PurchaseDetails;
 use App\Models\Stock;
+use App\Models\Transaction;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -123,6 +124,39 @@ class OrderController extends Controller
         // $cashTransaction= new Trans
         
 
+        // trunsaction begin 
+
+        $cogs_transaction = new Transaction;
+		$cogs_transaction->voucher_ref=1;
+		$cogs_transaction->transaction_date=now();
+		$cogs_transaction->account_id= 34 ;
+		$cogs_transaction->amount=2000;
+		$cogs_transaction->description="COGS";
+		$cogs_transaction->transaction_against=56;
+		$cogs_transaction->debit=2000;
+		$cogs_transaction->credit=0;
+		$cogs_transaction->user_id=1;
+        date_default_timezone_set("Asia/Dhaka");
+		$cogs_transaction->created_at=date('Y-m-d H:i:s');
+          date_default_timezone_set("Asia/Dhaka");
+		$cogs_transaction->updated_at=date('Y-m-d H:i:s');
+		$cogs_transaction->save();
+
+        $inv_transaction = new Transaction;
+		$inv_transaction->voucher_ref=1;
+		$inv_transaction->transaction_date=now();
+		$inv_transaction->account_id=57;
+		$inv_transaction->amount=2000;
+		$inv_transaction->description="inventory";
+		$inv_transaction->transaction_against=34 ;
+		$inv_transaction->debit=0;
+		$inv_transaction->credit=2000;
+		$inv_transaction->user_id=1;
+        date_default_timezone_set("Asia/Dhaka");
+		$inv_transaction->created_at=date('Y-m-d H:i:s');
+          date_default_timezone_set("Asia/Dhaka");
+		$inv_transaction->updated_at=date('Y-m-d H:i:s');
+		$inv_transaction->save();
 
 
 
