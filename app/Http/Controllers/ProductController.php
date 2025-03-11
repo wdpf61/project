@@ -16,6 +16,8 @@ class ProductController extends Controller{
 	public function index(){
 		$products = Product::paginate(10);
 		return view("pages.erp.product.index",["products"=>$products]);
+
+		// return response()->json($products);
 	}
 
 	
