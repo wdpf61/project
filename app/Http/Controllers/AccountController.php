@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Account;
 
 use App\Models\AccountGroup;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ class AccountController extends Controller
 {
 	public function index()
 	{
-		$accounts = Account::paginate(10);
+		$accounts = Account::get();
 		return view("pages.erp.account.index", ["accounts" => $accounts]);
 	}
 	public function create()
@@ -64,8 +65,17 @@ class AccountController extends Controller
 	}
 	public function show($id)
 	{
-		$account = Account::find($id);
-		return view("pages.erp.account.show", ["account" => $account]);
+		$accounts = Account::all();
+         $transactions= Transaction::where('account_id', $id)->with("account")->get();
+        //  echo json_encode($transactions);
+		return view("pages.erp.account.show", ["transactions" => $transactions, "accounts" => $accounts]);
+	}
+	public function ledger_report(Request $request)
+	{
+		$accounts = Account::all();
+         $transactions= Transaction::where('account_id', $request->account_id)->whereBetween('transaction_date', [ $request->start_date,$request->end_date ])->with("account")->get();
+        //  echo json_encode($transactions);
+		return view("pages.erp.account.show", ["transactions" => $transactions, "accounts" => $accounts]);
 	}
 	public function edit(Account $account)
 	{

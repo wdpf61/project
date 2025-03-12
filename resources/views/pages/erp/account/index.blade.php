@@ -14,6 +14,11 @@
 
 @endsection
 @section('page')
+<div class="row"></div>
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-body">
+			
 <a href="{{route('accounts.create')}}">New Account</a>
 <table class="table table-hover text-nowrap">
 	<thead>
@@ -22,15 +27,6 @@
 			<th>Code</th>
 			<th>Name</th>
 			<th>Account Group Id</th>
-			<th>Is Payment Method</th>
-			<th>Is Trx No Required</th>
-			<th>Description</th>
-			<th>Is Active</th>
-			<th>Created At</th>
-			<th>Created By</th>
-			<th>Updated At</th>
-			<th>Updated By</th>
-
 			<th>Action</th>
 		</tr>
 	</thead>
@@ -41,14 +37,10 @@
 			<td>{{$account->code}}</td>
 			<td>{{$account->name}}</td>
 			<td>{{$account->account_group_id}}</td>
-			<td>{{$account->is_payment_method}}</td>
-			<td>{{$account->is_trx_no_required}}</td>
-			<td>{{$account->description}}</td>
-			<td>{{$account->is_active}}</td>
-			<td>{{$account->created_at}}</td>
-			<td>{{$account->created_by}}</td>
-			<td>{{$account->updated_at}}</td>
-			<td>{{$account->updated_by}}</td>
+			
+		
+		
+			
 
 			<td>
 			<form action = "{{route('accounts.destroy',$account->id)}}" method = "post">
@@ -63,6 +55,15 @@
 	@endforeach
 	</tbody>
 </table>
+<div class="d-felx justify-content-center">
+
+	{{-- {{ $accounts->links()}} --}}
+
+</div>
+</div>
+</div>
+</div>
+</div>
 @endsection
 @section('script')
 
