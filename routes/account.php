@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AccountGroupController;
 use App\Http\Controllers\ChartOfAccountController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TrialBalanceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,9 @@ Route::prefix('accounts')->group(function(){
 
    Route::get('chartofaccount', [ChartOfAccountController::class, 'index']);
    Route::get('/chartofaccount/pdf', [ChartOfAccountController::class, 'printPdf'])->name('chart.of.accounts.pdf');
+  
+   Route::get('trialbalance', [TrialBalanceController::class, 'index'])->name('trial.balance.index');
+   Route::get('/trialbalance/pdf', [TrialBalanceController::class, 'printPdf'])->name('trial.balance.pdf');
   
   
    Route::resource('transactions',TransactionController::class);
