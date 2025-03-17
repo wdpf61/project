@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\api\OrderController;
+use App\Http\Controllers\api\SupplierController;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\RoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +22,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::options('/{any}', [Controller::class, 'handlePreflight'])->where('any', '.*');
+
+
 Route::resource('orders', OrderController::class);
 
+
+Route::resource('roles', RoleController::class);
+
+Route::get('rolesdelete', [RoleController::class, 'delete']);
+
+
 Route::post('purchase', [OrderController::class, 'Purchase_store']);
+
+Route::get('suppliers',[SupplierController::class, 'index']);
+Route::get('warehouses',[SupplierController::class, 'warehouse']);
+Route::get('products',[SupplierController::class, 'products']);
+
+Route::post('saveReactpurchase',[SupplierController::class, 'saveReactpurchase']);
