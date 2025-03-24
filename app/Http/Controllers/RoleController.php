@@ -31,6 +31,8 @@ class RoleController extends Controller
 	public function store(Request $request)
 	{
 
+		print_r($request->all());
+
 		try {
 			//Role::create($request->all());
 		$role = new Role;
@@ -42,7 +44,7 @@ class RoleController extends Controller
 
 		$role->save();
 
-		return response()->json(["message" => "Role deleted successfully", "role" => $role ]);
+		 return response()->json(["message" => "Role Saved successfully", "role" => $role ]);
 		} catch (\Throwable $th) {
 			return response()->json(["message" => $th->getMessage()] );
 		}
@@ -59,18 +61,16 @@ class RoleController extends Controller
 	}
 	public function update(Request $request)
 	{
+		// print_r($request->all());
 		//Role::update($request->all());
 
 		try {
-
-
 			$role = Role::find($request->id);
 			$role->name = $request->name;
 			date_default_timezone_set("Asia/Dhaka");
 			$role->updated_at = date('Y-m-d H:i:s');
 			date_default_timezone_set("Asia/Dhaka");
 			$role->created_at = date('Y-m-d H:i:s');
-
 			$role->save();
 
 			return response()->json(["role" => $role]);
