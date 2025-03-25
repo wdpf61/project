@@ -5,12 +5,27 @@ namespace App\Http\Controllers\api\vue;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Psy\Exception\ThrowUpException;
 
 class RoleController extends Controller
 {
     public function index()
     {
-        return response()->json(["roles"=> Role::all()]);
+         try {
+            $role= Role::all();
+            
+            if ( !$role) {
+                $role= "No Data found";
+            }
+           
+    
+            return response()->json(["roles"=> $role ]);
+         } catch (\Throwable $th) {
+            return response()->json(["error"=> $th->getMessage()]);
+         }
+
+       
     }
 
  
@@ -22,6 +37,8 @@ class RoleController extends Controller
             $role->name= $request->name;
             $role->save();
 
+           
+
             return response()->json(["res"=> $role]);
         } catch (\Throwable $th) {
             return response()->json(["err"=>$th]);
@@ -29,27 +46,35 @@ class RoleController extends Controller
       
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        try {
+            $role=  Role::find($id);
+
+            if ( !$role) {
+                $role= "No Data found";
+            }
+
+
+            return response()->json(["roles"=> $role]);
+        } catch (\Throwable $th) {
+            return response()->json(["roles"=>$th]);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+   
+    public function update(Request $request)
     {
-        //
+        try {
+
+            $role= Role::find($request->id);
+            $role->name= $request->name;
+            $role->save();
+
+            return response()->json(["res"=> $role]);
+        } catch (\Throwable $th) {
+            return response()->json(["err"=>$th->getMessage()]);
+        }
     }
 
    
@@ -59,8 +84,12 @@ class RoleController extends Controller
             $role=  Role::destroy($id);
             return response()->json(["roles"=> $role]);
         } catch (\Throwable $th) {
-            return response()->json(["roles"=>$th]);
+            return response()->json(["roles"=>$th->getMessage()]);
         }
   
     }
 }
+
+
+// php artisan make:controller api/vue/RoleController --api
+ // throw ValidationException::withMessages(['your error message']);
