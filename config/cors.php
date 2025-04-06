@@ -32,3 +32,6 @@ return [
     'supports_credentials' => false,
 
 ];
+
+
+// https://stackoverflow.com/questions/78872654/laravel-11-cors-problem-even-after-config-cors-php-file-setup

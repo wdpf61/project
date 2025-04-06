@@ -37,9 +37,6 @@ Route::post('saveReactpurchase',[SupplierController::class, 'saveReactpurchase']
 
 
 Route::apiResource("roles", RoleController::class);
-
-
-
 Route::apiResource('users', UserController::class);
 
 
