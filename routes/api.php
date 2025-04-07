@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\OrderController;
 use App\Http\Controllers\api\SupplierController;
+use App\Http\Controllers\api\vue\AuthController;
 use App\Http\Controllers\api\vue\RoleController;
 use App\Http\Controllers\api\vue\UserController;
 use App\Http\Controllers\Controller;
@@ -36,10 +37,15 @@ Route::get('products',[SupplierController::class, 'products']);
 Route::post('saveReactpurchase',[SupplierController::class, 'saveReactpurchase']);
 
 
-Route::apiResource("roles", RoleController::class);
+Route::apiResource("roles", RoleController::class)->middleware("auth:api");
 Route::apiResource('users', UserController::class);
+
+Route::post('register',[AuthController::class,'register']);
+Route::post('login', [AuthController::class,'login']);
+Route::post('refresh', [AuthController::class,'refresh']);
+Route::post('logout', [AuthController::class,'logout']);
 
 
 
 // https://stackoverflow.com/questions/54721576/laravel-route-apiresource-difference-between-apiresource-and-resource-in-route
-
+// https://jurin.medium.com/securing-laravel-10-api-using-jwt-a5b6dca58fd7
