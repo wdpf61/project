@@ -17,18 +17,17 @@ class RoleController extends Controller
     // }
     public function index()
     {
-         try {
-            $role= Role::all();
-            
-            if ( !$role) {
-                $role= "No Data found";
-            }
-           
-    
-            return response()->json(["roles"=> $role ]);
-         } catch (\Throwable $th) {
-            return response()->json(["error"=> $th->getMessage()]);
-         }
+        $role= Role::all();
+        return response()->json(["roles"=> $role ]);
+        //  try {
+        //     $role= Role::all();
+        //     if ( !$role) {
+        //         $role= "No Data found";
+        //     }
+        //     return response()->json(["roles"=> $role ]);
+        //  } catch (\Throwable $th) {
+        //     return response()->json(["error"=> $th->getMessage()]);
+        //  }
 
        
     }
@@ -36,18 +35,22 @@ class RoleController extends Controller
  
     public function store(Request $request)
     {
-        try {
 
-            $role= new Role();
-            $role->name= $request->name;
-            $role->save();
+        $role= new Role();
+        $role->name= $request->name;
+        $role->save();
 
-           
 
-            return response()->json(["res"=> $role]);
-        } catch (\Throwable $th) {
-            return response()->json(["err"=>$th]);
-        }
+
+        // try {
+
+        //     $role= new Role();
+        //     $role->name= $request->name;
+        //     $role->save();
+        //     return response()->json(["res"=> $role]);
+        // } catch (\Throwable $th) {
+        //     return response()->json(["err"=>$th]);
+        // }
       
     }
 
@@ -59,8 +62,6 @@ class RoleController extends Controller
             if ( !$role) {
                 $role= "No Data found";
             }
-
-
             return response()->json(["roles"=> $role]);
         } catch (\Throwable $th) {
             return response()->json(["roles"=>$th]);
@@ -92,6 +93,10 @@ class RoleController extends Controller
             return response()->json(["roles"=>$th->getMessage()]);
         }
   
+    }
+
+    function order(){
+        return response()->json(["roles"=> "this is order function"]);
     }
 }
 

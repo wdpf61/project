@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\vue;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -35,6 +36,9 @@ class UserController extends Controller
             $user->name=$request->name;
             $user->role_id=$request->role_id;
             $user->email=$request->email;
+           
+
+            $user->password = Hash::make($request->password);
             
             date_default_timezone_set("Asia/Dhaka");
             $user->created_at=date('Y-m-d H:i:s');
@@ -61,7 +65,12 @@ class UserController extends Controller
   
     public function show($id)
     {
-        //
+        try {
+            $user=  User::find($id);
+            return response()->json(["user"=>  $user ]);
+         } catch (\Throwable $th) {
+             return response()->json(["error"=> $th->getMessage()]);
+         }
     }
 
     /**
@@ -84,6 +93,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+           $deleteUser=  User::destroy($id);
+           return response()->json(["deleted"=>  $deleteUser ]);
+        } catch (\Throwable $th) {
+            return response()->json(["error"=> $th->getMessage()]);
+        }
     }
 }

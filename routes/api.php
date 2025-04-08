@@ -6,7 +6,6 @@ use App\Http\Controllers\api\vue\AuthController;
 use App\Http\Controllers\api\vue\RoleController;
 use App\Http\Controllers\api\vue\UserController;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::options('/{any}', [Controller::class, 'handlePreflight'])->where('any', '.*');
 Route::resource('orders', OrderController::class);
-Route::resource('roles', RoleController::class);
+// Route::resource('roles', RoleController::class);
 Route::get('rolesdelete', [RoleController::class, 'delete']);
 Route::post('purchase', [OrderController::class, 'Purchase_store']);
 Route::get('suppliers',[SupplierController::class, 'index']);
@@ -37,8 +36,11 @@ Route::get('products',[SupplierController::class, 'products']);
 Route::post('saveReactpurchase',[SupplierController::class, 'saveReactpurchase']);
 
 
-Route::apiResource("roles", RoleController::class)->middleware("auth:api");
+Route::get("roles/order", [RoleController::class, "order"]);
+
+Route::apiResource("roles", RoleController::class);
 Route::apiResource('users', UserController::class);
+
 
 Route::post('register',[AuthController::class,'register']);
 Route::post('login', [AuthController::class,'login']);
