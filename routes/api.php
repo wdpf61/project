@@ -4,6 +4,7 @@ use App\Http\Controllers\api\OrderController;
 use App\Http\Controllers\api\SupplierController;
 use App\Http\Controllers\api\vue\AuthController;
 use App\Http\Controllers\api\vue\RoleController;
+use App\Http\Controllers\api\vue\SalesController as VueSalesController;
 use App\Http\Controllers\api\vue\UserController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -46,6 +47,11 @@ Route::post('register',[AuthController::class,'register']);
 Route::post('login', [AuthController::class,'login']);
 Route::post('refresh', [AuthController::class,'refresh']);
 Route::post('logout', [AuthController::class,'logout']);
+
+// sales
+
+Route::get('sales/data', [VueSalesController::class, "index"]);
+Route::post('/sales/processOrder', [VueSalesController::class, "process"]);
 
 
 
