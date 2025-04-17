@@ -4,8 +4,11 @@ namespace App\Http\Controllers\api\vue;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\Order;
+use App\Models\OrderDetails;
 use App\Models\Product;
 use App\Models\Role;
+use App\Models\Stock;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -36,54 +39,62 @@ class SalesController extends Controller
  
     public function process(Request $request)
     {
-     $allData= $request->all();
-     return response()->json(["allData"=> $allData]);
-    }
+     // order table 
+      try {
+        $order = new Order();
+		$order->customer_id=$request->customer['id'];
+		$order->order_date= now();
+		$order->delivery_date=  date('Y-m-d', strtotime('+7 days'));
+		$order->shipping_address=$request->customer['address'];
+		$order->order_total=$request->grandtotal;
+		$order->paid_amount=$request->grandtotal;
+		$order->remark="COD";
+		$order->status_id=1;
+		$order->discount=$request->discount;
+		$order->vat=0;
+        date_default_timezone_set("Asia/Dhaka");
+		$order->created_at=date('Y-m-d H:i:s');
+        date_default_timezone_set("Asia/Dhaka");
+		$order->updated_at=date('Y-m-d H:i:s');
+		$order->save();
+        $last_id= $order->id;
 
-    public function show($id)
-    {
-        try {
-            $role=  Role::find($id);
+        foreach ($request->products as $key => $product) {
+           
+            $orderdetail = new OrderDetails();
+            $orderdetail->order_id= $last_id;
+            $orderdetail->product_id=$product['item_id'];
+            $orderdetail->qty=$product['qty'];
+            $orderdetail->price=$product['price'];
+            $orderdetail->vat=0;
+            $orderdetail->discount=$product['discount'];
+            date_default_timezone_set("Asia/Dhaka");
+            $orderdetail->created_at=date('Y-m-d H:i:s');
+             date_default_timezone_set("Asia/Dhaka");
+            $orderdetail->updated_at=date('Y-m-d H:i:s');
+            $orderdetail->save();
 
-            if ( !$role) {
-                $role= "No Data found";
-            }
-            return response()->json(["roles"=> $role]);
-        } catch (\Throwable $th) {
-            return response()->json(["roles"=>$th]);
+            $stock = new Stock;
+            $stock->product_id=$product['item_id'];
+            $stock->qty=$product['qty'] * -1;
+            $stock->transaction_type_id=2;
+            $stock->remark="Sales";
+            date_default_timezone_set("Asia/Dhaka");
+            $stock->created_at=date('Y-m-d H:i:s');
+            $stock->warehouse_id=$request->warehouse['id'];
+            $stock->save();
+
         }
-    }
 
+        $allData= $request->all();
+        return response()->json(["success"=> $allData]);
+
+      } catch (\Throwable $th) {
+        return response()->json(["err"=> $th->getMessage()]);
+      }
+
+    }
    
-    public function update(Request $request)
-    {
-        try {
-
-            $role= Role::find($request->id);
-            $role->name= $request->name;
-            $role->save();
-
-            return response()->json(["res"=> $role]);
-        } catch (\Throwable $th) {
-            return response()->json(["err"=>$th->getMessage()]);
-        }
-    }
-
-   
-    public function destroy($id)
-    {
-        try {
-            $role=  Role::destroy($id);
-            return response()->json(["roles"=> $role]);
-        } catch (\Throwable $th) {
-            return response()->json(["roles"=>$th->getMessage()]);
-        }
-  
-    }
-
-    function order(){
-        return response()->json(["roles"=> "this is order function"]);
-    }
 }
 
 
