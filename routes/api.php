@@ -57,3 +57,6 @@ Route::post('/sales/processOrder', [VueSalesController::class, "process"]);
 
 // https://stackoverflow.com/questions/54721576/laravel-route-apiresource-difference-between-apiresource-and-resource-in-route
 // https://jurin.medium.com/securing-laravel-10-api-using-jwt-a5b6dca58fd7
+
+
+// 01977-450991  Shoriful Islam sir  Job placement

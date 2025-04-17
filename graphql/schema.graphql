@@ -1,0 +1,18 @@
+
+type Query{
+   roles: [Role] @all
+   role(id:ID @eq) :Role @find
+}
+
+type Mutation{
+  createRole(name:String):Role @create
+  updateRole(id:ID, name:String):Role @update
+  deleteRole(id:ID  @whereKey):Role @delete
+}
+
+type Role{
+   id:ID,
+   name:String
+   created_at:String
+   updated_at:String
+}
