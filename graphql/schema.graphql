@@ -2,10 +2,11 @@
 type Query{
    roles: [Role] @all
    role(id:ID @eq) :Role @find
+   users:[User] @all
 }
 
 type Mutation{
-  createRole(name:String):Role @create
+  createRole(name:String! id:ID):Role @upsert
   updateRole(id:ID, name:String):Role @update
   deleteRole(id:ID  @whereKey):Role @delete
 }
@@ -13,6 +14,15 @@ type Mutation{
 type Role{
    id:ID,
    name:String
+   created_at:String
+   updated_at:String
+}
+
+
+type User{
+   id:ID,
+   name:String
+   role:Role @belongsTo
    created_at:String
    updated_at:String
 }
